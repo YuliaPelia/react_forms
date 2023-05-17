@@ -18,13 +18,13 @@ const Form = () => {
       email: Yup.string()
         .email("Невірна email адреса")
         .required("Обов'язкове поле!"),
+      amount: Yup.number().min(5, "Не менше 5").required("Обов'язкове поле!"),
+      currency: Yup.string().required("Виберіть валюту"),
+      text: Yup.string().min(10, "Не менше 10 символів"),
+      terms: Yup.boolean()
+        .required("Необхідна згода")
+        .oneOf([true], "Необхідна згода"),
     }),
-    amount: Yup.number().min(5, "Не менше 5").required("Обов'язкове поле!"),
-    currency: Yup.string().required("Виберіть валюту"),
-    text: Yup.string().min(10, "Не менше 10 символів"),
-    terms: Yup.boolean()
-      .required("Необхідна згода")
-      .oneOf([true], "Необхідна згода"),
 
     onSubmit: (values) => console.log(JSON.stringify(values, null, 2)),
   });
@@ -94,7 +94,7 @@ const Form = () => {
         onBlur={formik.handleBlur}
       />
       {formik.errors.text && formik.touched.text ? (
-        <div>{formik.errors.text}</div>
+        <p>{formik.errors.text}</p>
       ) : null}
       <label className="checkbox">
         <input
